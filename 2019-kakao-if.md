@@ -348,13 +348,25 @@ https://if.kakao.com/program
                 - ExternalTaskSensor
                     - DAG1 : 엄청나게 큼
                     - 센서를 이용해 별도의 DAG를 만듦
- 
- 
-
+![image1](./pics/15-1.jpeg)
+![image1](./pics/15-2.jpeg)
+![image1](./pics/15-3.jpeg)
+![image1](./pics/15-4.jpeg)
+![image1](./pics/15-5.jpeg)
+![image1](./pics/15-6.jpeg)
+![image1](./pics/15-7.jpeg)
 
 ---
 ##### 16시
 - R2, 광고 데이터 처리 시스템 소개
+![image1](./pics/16-1.jpeg)
+![image1](./pics/16-2.jpeg)
+![image1](./pics/16-3.jpeg)
+![image1](./pics/16-4.jpeg)
+![image1](./pics/16-5.jpeg)
+![image1](./pics/16-6.jpeg)
+![image1](./pics/16-7.jpeg)
+![image1](./pics/16-8.jpeg)
 ---
 
 
