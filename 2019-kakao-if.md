@@ -30,7 +30,7 @@ https://if.kakao.com/program
          - 중급 : Connection을 유지하는 100만 이용자
             - 100만명이 30분동안 커넥션 유지
             - Aws LB(NLB) 넣어서 로드밸런싱 테스트
-                - 70만 vuser 인입시 error -> 설정 변경 후 100만 통과 -> clear -> 다음날 다시 하니 안됨 -> 문의 : Pre-Warm-Up 필요함
+                - 70만 vuser 인입시 error -> 설정 변경 후 100만 통과 -> clear -> 다음날 다시 하니 안됨 -> 문의 : Pre-Warm-Up 필요함? 답 ㄴㄴ
                 - 이는 매일 첫 테스트시에만 발생함 (이상함) 2주 내내 -> AWS 전달 -> Pre-Warm Up 하세요
                 - 가이드가 거짓말을 침 -> 참고만 합시다.
         - 중급 : API 검증 실패
