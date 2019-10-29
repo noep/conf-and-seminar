@@ -248,8 +248,117 @@ Opservability : 서비스에 대한 이해 / 장애대응에 대한 insight제�
 
 [발표자료](https://deview.kr/data/deview/2019/presentation/[225]+2019%EB%85%84+FE+%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EB%A5%BC+%EB%B0%B0%EC%9A%B0%EB%8A%94+%EA%B8%B0%EB%B6%84(FE+%EC%9D%B8%EC%8B%B8%EB%93%A4%EC%9D%B4%EB%9D%BC%EB%A9%B4+%EC%95%8C%EA%B3%A0+%EC%9E%88%EC%96%B4%EC%95%BC+%ED%95%98%EB%8A%94+%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC+%EA%B8%B0%EC%88%A0%EB%93%A4)-191028.pdf)
 
+자리때문에 추후 따로 정리
+
 
 ## TRACK3 Armeria: 어디서나 잘 어울리는 마이크로서비스 프레임워크
 이희승님
 
 [발표자료](https://deview.kr/data/deview/2019/presentation/[236]2019.10.%20Armeria%20-%20A%20Microservice%20Framework%20Well-suited%20Everywhere.pdf)
+
+## Armeria Framework
+Microservice Framework
+GRPC Thrift
+
+좋은 Microservice Framework 선택하기
+- 쉽고 / 사용자가 쓰기 편한
+- 비동기 / 리액티브 지원
+- RPC지원 
+- 실패가 발생할 수 있는 지점 줄이기 (client side)
+
+단순함
+- 예제
+- 포트가 겹쳐도 앞부분 byte를 까보고 autodetect
+- 어노테이션도 지원
+GRPC 지원 /Thrift 지원
+.proto / .thrift
+
+위에 나온 프로토콜들을 섞어서 지원
+
+## 비동기 / Reactive 모델 선택 이유
+- 동기로 개발을 한다면
+  - 장애 전파 이슈 : 1개의 microservice가 장애가 발생해도 전파됨 -> 전체 시스템 마비
+  - 부하가 증가하는 경우
+  - 스레드 수나 cpu 수를 늘리면
+    - 미봉책
+  - 지속적으로 시스템 튜닝을 해 주어야 함
+- 비동기로 바꾸면?
+  - 튜닝 포인트가 줄어듦
+  - 리소스 확보
+- 비동기로 처리를 하더라도
+  - 대용량 페이로드의 문제점
+  - 10MB의 response를 100k client가 요청하면 -> OOM
+  - 데이터를 쪼개 작은 단위로 데이터를 만들어 스트리밍 처리를 하는 형태로 해결
+- Armeria에서는 Reactive Streams API를 이용해 backpressure를 컨트롤 함
+
+## 1st class RPC support
+- RPC vs. HTTP impedance mismatch
+- HTTP를 이용한 RPC 요청
+- 실패한 RPC요청이나 HTTP에서는 200으로 전달함
+- HTTP 레벨에서는 알 수 없음
+
+## Killing many birds with Structured Logging
+
+## First things first - Decorators
+- Decorator들은 Armeria의 전역에서 쓰임
+- Interceptor 같은데?
+- 라인에서는 Request Response 에 Listener를 붙여 kafka로 전송
+- 이후 elk에 태워 req /res 로그 수집
+
+## Makind a debug call
+- REST는 swagger curl 이런거 많은데
+- RPC는 그런게 많이 없음
+- 좀더 편한 툴이 있으면 좋겠다 -> Armeria documentation Service
+
+## Armeria documentation Service
+- DocService를 추가함으로써, 자동으로 문서화 + operation 리스팅 / 직접 콜 가능
+- 기존엔 RPC 상에서 이 수준의 편리함을 제공해주지 않았음
+
+## Cool features not available in upstream
+- 업스트림에서 제공하지 않는 다양한 기능 제공
+- grpc
+- thrift
+- decorator를 이용한 유연성 제공
+- mix&match
+
+## Armeria ❤ What You ❤
+- 어디든 다 가져다 붙일 수 있다
+- Spring, Guice, Dagger
+- 특정 기술을 통째로 사용하지 않고 원하는 기술을 작은 단위로 사용할 수 있어야 한다는 microservice 철학 준수 (???)
+
+## Use Cases
+- Slack / Line / KakaoPay
+- Slack
+  - Thrift -> rpc 를 원함 -> Armeria with many Armeria Services
+- Line 
+  - Spring Boot + Tomcat + Thrift on Servlet -> Spring Boot + Armeria(http2)
+- KakaoPay
+  - VAN사 연동할 때 ()
+  - Kotlin + Armeria
+  - Spring WebFlux + gRPC 
+  - Armeria Replaces Spring’s network layer (reactor-netty)
+  - gRPC served directly = No WebFlux overhead
+
+## Less points of failure
+- 기존 로드밸런서 / 리버스 프록시의 장단점
+  - 장점 : 부하 분산 / TLS 오프로딩 / 자동 헬스체크 / 서비스 디스커버리(?)
+  - 단점 : SPOF / HOP 증대 / 불균형한 부하 분배 / health check 랙 
+- Client-side load-balancing
+  - 서비스 디스커버리 어떻게? -> DNS / zookeeper 에 쿼리
+  - 균등 부하분산에 유리
+- NRT health check
+  - http2 + long-polling
+    - 주기적으로 하지 않고 계속 커넥션을 유지하다가 문제가 발생할 때 알림을 줌
+
+## Future work
+  - 아직 1.0 안됨
+  - kotlin dsl 지원하면 써볼만 하지 않을까
+## QNA
+- websocket : 아직 ㄴㄴ
+- 헬스체크에서 변경이 일어날 때에만 응답하는 경우 : 커넥션이 끊기면 소켓 레벨에서 알 수 있음
+- grpc 동기 처리도 가능
+- service mesh : istio mesh sidecar -> microservice 스케일이 커지지 않나, 장단점이 있는 주제다 
+- 
+
+
+
