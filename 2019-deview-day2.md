@@ -1,11 +1,12 @@
 # 2019-deview-day2
 
 ## TRACK1 네이버 로그를 지탱하는 힘 (DataStore 로그 저장소)
-이윤경 / 강민우
-https://deview.kr/data/deview/2019/presentation/[211]%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%A1%9C%EA%B7%B8%EB%A5%BC+%EC%A7%80%ED%83%B1%ED%95%98%EB%8A%94+%ED%9E%98_20191025_%EA%B0%95%EB%AF%BC%EC%9A%B0_%EC%9D%B4%EC%9C%A4%EA%B2%BD.pdf
+이윤경님 / 강민우님
+
+[발표자료](https://deview.kr/data/deview/2019/presentation/[211]%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%A1%9C%EA%B7%B8%EB%A5%BC+%EC%A7%80%ED%83%B1%ED%95%98%EB%8A%94+%ED%9E%98_20191025_%EA%B0%95%EB%AF%BC%EC%9A%B0_%EC%9D%B4%EC%9C%A4%EA%B2%BD.pdf)
 
 ### 로그 저장 
-####유실 없는 로그 저장 
+#### 유실 없는 로그 저장 
 - at least once
   - 데이터 중복이 발생할 수 있음
   - 중복된 데이터 처리 : 고유 식별자를 이용한 idempotent 쓰기
@@ -93,8 +94,9 @@ https://deview.kr/data/deview/2019/presentation/[211]%EB%84%A4%EC%9D%B4%EB%B2%84
 
 
 ## TRACK1 Pinpoint는 어떻게 observability를 강화했는가
-구태진
-https://deview.kr/data/deview/2019/presentation/[212]핀포인트는+어떻게+observability를+강화했는가.pdf
+구태진님
+
+[발표자료](https://deview.kr/data/deview/2019/presentation/[212]핀포인트는+어떻게+observability를+강화했는가.pdf)
 
 Pinpoint 릴리즈 노트 / 구현방법을 빠르게 훑는 강연 
 -> 발표 자료를 보는게 좋음
@@ -121,7 +123,10 @@ Opservability : 서비스에 대한 이해 / 장애대응에 대한 insight제�
 
 
 ## TRACK2 Fail Fast, Learn Faster SRE (실패에서 배워나가는 SRE)
-김재헌 / 유호균
+김재헌님 / 유호균님
+
+[발표자료](https://deview.kr/data/deview/2019/presentation/[223]Fail%20Fast,%20Learn%20Faster%20SRE%20(%EC%8B%A4%ED%8C%A8%EC%97%90%EC%84%9C%20%EB%B0%B0%EC%9B%8C%EB%82%98%EA%B0%80%EB%8A%94%20SRE)_comp.pdf)
+
 
 - SRE란?
   - SRE: Site Reliability Engineering
@@ -206,13 +211,45 @@ Opservability : 서비스에 대한 이해 / 장애대응에 대한 insight제�
     - 본질적인 SRE에 집중하다 보면 결국 재난 엔지니어링으로 귀결된다
 
 
-
-
-
 ## TRACK2 React, Angular, Vue를 한 번에 지원하기 위한 설계 (Cross Framework Component)
-최연규
+최연규님
+
+[발표자료](https://deview.kr/data/deview/2019/presentation/[224]+React,+Angular,+Vue%EB%A5%BC+%ED%95%9C+%EB%B2%88%EC%97%90+%EC%A7%80%EC%9B%90%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%9C+%EC%84%A4%EA%B3%84-191025.pdf)
+
+- Cross Framework Component
+  - 하나의 모듈 -> 여러 프레임웍 지원
+  - 크로스 플랫폼 : 1 개발 -> 여러 플랫폼에서 사용
+    - 자마린 플러터 네이티브 스크립트
+  - 1 js -> 모든 framework
+- 바닐라 컴포넌트를 프레임웍에 적용한 사례 /문제점
+  - 단순하게 래핑
+    - 내부 변수에 접근시 데이터 동기화가 안됨
+  - 별도로 만들기
+    - 비슷한 형태의 코드가 여러벌 만들어짐
+  - 고민과 해결
+    - 결국엔 DOM 조작의 문제다
+- 프레임워크 DOM 렌더링 원리(key & DOM Diff)
+  - 다른 문법 다만 key가 동일
+- Cross Framework Component(CFC) 원리
+  - DOM 조작 외부화
+    - 데이터만 조작 / 프레임워크에게 돔 조작을 위임
+  - 추가 / 삭제 메소드 호출 원리
+    - ListDiffer : 데이터의 추가 / 삭제 / 유지 여부를 알려주는 라이브러리를 만듦
+- Cross Framework Component(CFC) 적용방법
+  - 기본 : 추가/삭제 메소드 제공
+  - DOM 조작 외부화 : 렌더링 외부화를 옵션을 통해 제공
+  - List의 Diff를 알 수 있는 메소드 제공
+    - removed -> maintained -> added 순으로 조사
+- 누구나 쉽게 만들 수 있는 InfiniteScroll에 CFC 적용해보기 / egjs에서 CFC를 적용한 사례
+  - https://github.com/NAVER-FEPlatform/deview2019-demo
+
 
 ## TRACK2 2019년 FE 프레임워크를 배우는 기분(FE 인싸들이라면 알고 있어야 하는 프레임워크 기술들)
 
+[발표자료](https://deview.kr/data/deview/2019/presentation/[225]+2019%EB%85%84+FE+%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EB%A5%BC+%EB%B0%B0%EC%9A%B0%EB%8A%94+%EA%B8%B0%EB%B6%84(FE+%EC%9D%B8%EC%8B%B8%EB%93%A4%EC%9D%B4%EB%9D%BC%EB%A9%B4+%EC%95%8C%EA%B3%A0+%EC%9E%88%EC%96%B4%EC%95%BC+%ED%95%98%EB%8A%94+%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC+%EA%B8%B0%EC%88%A0%EB%93%A4)-191028.pdf)
+
 
 ## TRACK3 Armeria: 어디서나 잘 어울리는 마이크로서비스 프레임워크
+이희승님
+
+[발표자료](https://deview.kr/data/deview/2019/presentation/[236]2019.10.%20Armeria%20-%20A%20Microservice%20Framework%20Well-suited%20Everywhere.pdf)
